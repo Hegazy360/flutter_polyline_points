@@ -14,10 +14,10 @@ class NetworkUtil {
   ///
   Future<PolylineResult> getRouteBetweenCoordinates(
       String googleApiKey,
-      String comfort,
       PointLatLng origin,
       PointLatLng destination,
       TravelMode travelMode,
+      String comfort,
       List<PolylineWayPoint> wayPoints,
       bool avoidHighways,
       bool avoidTolls,
