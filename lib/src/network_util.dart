@@ -14,6 +14,7 @@ class NetworkUtil {
   ///
   Future<PolylineResult> getRouteBetweenCoordinates(
       String googleApiKey,
+      String comfort,
       PointLatLng origin,
       PointLatLng destination,
       TravelMode travelMode,
@@ -30,6 +31,7 @@ class NetworkUtil {
       "mode": mode,
       "avoidHighways": "$avoidHighways",
       "avoidFerries": "$avoidFerries",
+      "alternatives": "true",
       "avoidTolls": "$avoidTolls",
       "key": googleApiKey
     };
@@ -53,6 +55,9 @@ class NetworkUtil {
       if (parsedJson["status"]?.toLowerCase() == STATUS_OK &&
           parsedJson["routes"] != null &&
           parsedJson["routes"].isNotEmpty) {
+        //TODO: CALL TO API SHOULD GO HERE TO CALCULATE THE CORRECT ROUTE BASED ON COMFORT
+        //THE ROUTE RETURNED FROM THE API WILL BE THE ROUTE USED IN THE UI, NOT THE [0] ROUTE
+
         result.points = decodeEncodedPolyline(
             parsedJson["routes"][0]["overview_polyline"]["points"]);
       } else {

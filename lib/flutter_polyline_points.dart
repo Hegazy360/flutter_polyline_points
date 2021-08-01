@@ -19,7 +19,7 @@ class PolylinePoints {
   /// which can be used to draw polyline between this two positions
   ///
   Future<PolylineResult> getRouteBetweenCoordinates(
-      String googleApiKey, PointLatLng origin, PointLatLng destination,
+      String googleApiKey, String comfort, PointLatLng origin, PointLatLng destination,
       {TravelMode travelMode = TravelMode.driving,
       List<PolylineWayPoint> wayPoints = const [],
       bool avoidHighways = false,
@@ -28,6 +28,7 @@ class PolylinePoints {
       bool optimizeWaypoints = false}) async {
     return await util.getRouteBetweenCoordinates(
         googleApiKey,
+        comfort,
         origin,
         destination,
         travelMode,
