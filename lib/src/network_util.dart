@@ -47,23 +47,27 @@ class NetworkUtil {
     Uri uri =
         Uri.https("maps.googleapis.com", "maps/api/directions/json", params);
 
-    // print('GOOGLE MAPS URL: ' + url);
     var response = await http.get(uri);
+
     if (response.statusCode == 200) {
       var parsedJson = json.decode(response.body);
+      var paths = {};
+      // developer.log(response.body);
+
       result.status = parsedJson["status"];
       if (parsedJson["status"]?.toLowerCase() == STATUS_OK &&
           parsedJson["routes"] != null &&
           parsedJson["routes"].isNotEmpty) {
-        //TODO: CALL TO API SHOULD GO HERE TO CALCULATE THE CORRECT ROUTE BASED ON COMFORT
-        //THE ROUTE RETURNED FROM THE API WILL BE THE ROUTE USED IN THE UI, NOT THE [0] ROUTE
-
-        result.points = decodeEncodedPolyline(
-            parsedJson["routes"][0]["overview_polyline"]["points"]);
+        parsedJson["routes"].asMap().forEach((index, path) {
+          paths["path${index + 1}"] =
+              decodeEncodedPolyline(path["overview_polyline"]["points"]);
+        });
+        result.paths = paths;
       } else {
         result.errorMessage = parsedJson["error_message"];
       }
     }
+
     return result;
   }
 
