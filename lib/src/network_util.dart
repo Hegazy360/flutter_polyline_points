@@ -59,8 +59,10 @@ class NetworkUtil {
           parsedJson["routes"] != null &&
           parsedJson["routes"].isNotEmpty) {
         parsedJson["routes"].asMap().forEach((index, path) {
-          paths["path${index + 1}"] =
-              decodeEncodedPolyline(path["overview_polyline"]["points"]);
+          paths["path${index + 1}"] = {
+            "points": decodeEncodedPolyline(path["overview_polyline"]["points"]),
+            "legs": path["legs"]
+          };
         });
         result.paths = paths;
       } else {
